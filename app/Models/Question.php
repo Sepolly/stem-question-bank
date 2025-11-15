@@ -23,7 +23,7 @@ class Question extends Model
         static::creating(function ($question) {
             $question->user_id = auth()->id();
             $question->event_id = cache()->get('current_event_id');
-            $question->status = request()->user()->isSuperAdmin() ? QuestionStatus::APPROVED->value : QuestionStatus::PENDING->value;
+            $question->status = request()->user()?->isSuperAdmin() ? QuestionStatus::APPROVED->value : QuestionStatus::PENDING->value;
         });
     }
 

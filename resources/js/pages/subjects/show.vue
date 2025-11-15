@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import SubjectController from '@/actions/App/Http/Controllers/SubjectController';
 import Modal from '@/components/Modal.vue';
 import QuestionForm from '@/components/QuestionForm.vue';
+import SubjectForm from '@/components/SubjectForm.vue';
 import { useAuth } from '@/composables/useAuth';
 import useQuestion from '@/composables/useQuestion';
+import useSubject from '@/composables/useSubject';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Subject } from '@/types';
 import { ref } from 'vue';
@@ -13,8 +16,19 @@ defineProps<{
 
 const { currentUser } = useAuth();
 const { showQuestion, getQuestionType } = useQuestion();
+const {gotoSubjects} = useSubject();
 
 const showQuestionForm = ref(false);
+const showSubjectForm = ref(false)
+
+const closeSubjectForm = () => {
+    showSubjectForm.value  = false
+}
+
+const editSubject = () => {
+    showSubjectForm.value  = true
+}
+
 </script>
 
 <template>
@@ -32,11 +46,16 @@ const showQuestionForm = ref(false);
 
                     <div class="flex space-x-3">
                         <button
+                            @click="gotoSubjects"
                             class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
                         >
+                            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
                             Back to Subjects
                         </button>
                         <button
+                            @click="editSubject"
                             v-if="currentUser.canManageSubject"
                             class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
@@ -142,6 +161,11 @@ const showQuestionForm = ref(false);
 
         <Modal :show="showQuestionForm" class-name="max-w-xl">
             <QuestionForm :subjects="[subject]" @close="showQuestionForm = false" />
+        </Modal>
+
+        <!-- Subject Form Modal -->
+        <Modal :show="showSubjectForm">
+            <SubjectForm @close="closeSubjectForm" :editing-subject="subject" />
         </Modal>
     </AppLayout>
 </template>

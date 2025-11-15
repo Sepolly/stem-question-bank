@@ -15,11 +15,15 @@ class QuestionSessionController extends Controller
 
     public function index(int $eventId)
     {
+        $currentSessionId = session()->get('currentSession');
+
         return Inertia::render('sessions/index', [
             'sessions' => QuestionSessionResource::collection(
                 $this->questionSessionService->getAllSessions()
             ),
-            'currentSession' => session()->get('currentSession'),
+            'currentSession' => $currentSessionId && QuestionSessionResource::make(
+                $this->questionSessionService->getSessionById($currentSessionId)
+            ),
             'error' => session()->get('error')
         ]);
     }
@@ -32,7 +36,7 @@ class QuestionSessionController extends Controller
             $this->questionSessionService->createSession($request->validated());
 
         return back()->with([
-            'currentSession' => $session ? QuestionSessionResource::make($session) : null,
+            'currentSession' => $session ? $session->id : null,
             'error' => $error
         ]);
 

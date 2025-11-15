@@ -3,7 +3,7 @@ import QuestionController from '@/actions/App/Http/Controllers/QuestionControlle
 import EventForm from '@/components/EventForm.vue';
 import Modal from '@/components/Modal.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Event, Subject, type BreadcrumbItem } from '@/types';
+import { Activity, Event, Subject, type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/vue3';
 import Chart from 'chart.js/auto';
 import { onMounted, ref } from 'vue';
@@ -18,6 +18,7 @@ const props = defineProps<{
     pendingQuestionCount: number;
     rejectedQuestionCount: number;
     subjects: Subject[];
+    activities: Activity[];
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -297,7 +298,8 @@ function closeModal() {
                 <!-- Recent Activity -->
                 <div class="rounded-lg bg-white p-6 shadow">
                     <h3 class="mb-4 text-lg font-medium text-gray-900">Recent Activity</h3>
-                    <div class="space-y-4">
+
+                    <div class="space-y-4" v-for="activity in activities" :key="activity.id">
                         <div class="flex items-center space-x-4 rounded-lg p-3 transition-colors duration-150 hover:bg-gray-50">
                             <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-100">
                                 <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -310,90 +312,10 @@ function closeModal() {
                                 </svg>
                             </div>
                             <div class="min-w-0 flex-1">
-                                <div class="text-sm font-medium text-gray-900">New question added</div>
-                                <div class="text-sm text-gray-500">Calculus derivative problem</div>
+                                <div class="text-sm font-medium text-gray-900">{{ activity.title }}</div>
+                                <div class="text-sm text-gray-500">{{ activity.description }}</div>
                             </div>
-                            <div class="text-xs text-gray-400">2 min ago</div>
-                        </div>
-
-                        <div class="flex items-center space-x-4 rounded-lg p-3 transition-colors duration-150 hover:bg-gray-50">
-                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-green-100">
-                                <svg class="h-5 w-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <div class="text-sm font-medium text-gray-900">Question approved</div>
-                                <div class="text-sm text-gray-500">Physics mechanics question</div>
-                            </div>
-                            <div class="text-xs text-gray-400">15 min ago</div>
-                        </div>
-
-                        <div class="flex items-center space-x-4 rounded-lg p-3 transition-colors duration-150 hover:bg-gray-50">
-                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-yellow-100">
-                                <svg class="h-5 w-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <div class="text-sm font-medium text-gray-900">Review requested</div>
-                                <div class="text-sm text-gray-500">Biology photosynthesis question</div>
-                            </div>
-                            <div class="text-xs text-gray-400">1 hour ago</div>
-                        </div>
-
-                        <div class="flex items-center space-x-4 rounded-lg p-3 transition-colors duration-150 hover:bg-gray-50">
-                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-purple-100">
-                                <svg class="h-5 w-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                                    />
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <div class="text-sm font-medium text-gray-900">New topic created</div>
-                                <div class="text-sm text-gray-500">Quantum Physics</div>
-                            </div>
-                            <div class="text-xs text-gray-400">2 hours ago</div>
-                        </div>
-
-                        <div class="flex items-center space-x-4 rounded-lg p-3 transition-colors duration-150 hover:bg-gray-50">
-                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100">
-                                <svg class="h-5 w-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                    />
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <div class="text-sm font-medium text-gray-900">User registered</div>
-                                <div class="text-sm text-gray-500">New reviewer account created</div>
-                            </div>
-                            <div class="text-xs text-gray-400">3 hours ago</div>
-                        </div>
-
-                        <div class="flex items-center space-x-4 rounded-lg p-3 transition-colors duration-150 hover:bg-gray-50">
-                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-red-100">
-                                <svg class="h-5 w-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <div class="text-sm font-medium text-gray-900">Question rejected</div>
-                                <div class="text-sm text-gray-500">Chemistry formula error</div>
-                            </div>
-                            <div class="text-xs text-gray-400">4 hours ago</div>
+                            <div class="text-xs text-gray-400">{{ activity.createdAt }}</div>
                         </div>
                     </div>
                 </div>

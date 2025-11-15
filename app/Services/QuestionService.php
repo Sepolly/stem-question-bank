@@ -58,7 +58,9 @@ class QuestionService
     {
         try {
             $path = Storage::put('/temp',$data);
-            ImportQuestionsJob::dispatch($path);   
+            ImportQuestionsJob::dispatch($path)
+            ->onQueue('questions')
+            ->afterResponse(); 
         } catch (\Throwable $e) {
             Log::error($e->getMessage());
         }

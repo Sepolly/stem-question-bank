@@ -2,6 +2,7 @@
 import AuthenticatedSessionController from '@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
 import DashboardController from '@/actions/App/Http/Controllers/DashboardController';
 import EventController from '@/actions/App/Http/Controllers/EventController';
+import Settings from '@/actions/App/Http/Controllers/Settings';
 import DropdownMenu from '@/components/DropdownMenu.vue';
 import { useAuth } from '@/composables/useAuth';
 import useEvent from '@/composables/useEvent';
@@ -184,7 +185,7 @@ const NavLinks: NavLinkType[] = [
                                 </template>
 
                                 <ul class="space-y-2 text-sm">
-                                    <Link class="block rounded-md p-2 hover:bg-gray-50" href="#"> Profile </Link>
+                                    <Link class="block rounded-md p-2 hover:bg-gray-50" :href="Settings.ProfileController.edit()"> Profile </Link>
                                     <Link class="block rounded-md p-2 hover:bg-gray-50"> Settings </Link>
                                     <Link class="block rounded-md p-2 hover:bg-gray-50"> Help/Documentation </Link>
                                     <div class="h-[0.1px] w-full bg-gray-300"></div>

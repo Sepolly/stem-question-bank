@@ -33,4 +33,16 @@ class DashboardController extends Controller
             'subjects' => SubjectResource::collection($currentEvent->subjects),
         ]);
     }
+
+
+    public function noEvent()
+    {
+        $current_event = cache()->get('current_event_id');
+
+        if($current_event){
+            return to_route('dashboard',['event' => $current_event]);
+        }
+
+        return Inertia::render('create-event');
+    }
 }

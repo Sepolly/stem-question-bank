@@ -245,8 +245,8 @@ const progressText = computed(() => {
                             </div>
                         </div>
 
-                        <div v-if="showAnswers && currentQuestion?.type != 'mcq'" class="mt-4 font-semibold text-green-700">
-                            Correct Answer:
+                        <div v-if="showAnswers && currentQuestion?.type != 'mcq'" class="mt-4 font-semibold">
+                            <span class="text-green-700 block">Correct Answer:</span>
                             <span v-if="currentQuestion?.answer">{{ currentQuestion?.answer?.answerText }}</span>
                             <span v-if="currentQuestion?.boolAnswer">{{ currentQuestion.boolAnswer ? 'True' : 'False' }}</span>
                         </div>

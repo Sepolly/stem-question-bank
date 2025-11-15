@@ -3,24 +3,21 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionSessionController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
-$current_event = cache()->get('current_event_id');
 
 
-Route::get('/dashboard',function()use($current_event){
-    if(auth()->check() && $current_event){
-        return to_route('dashboard',['event' => $current_event]);
-    }
 
-    return Inertia::render('create-event');
-})->name('dashboard.noevent');
+Route::get('/',HomeController::class)
+    ->name('home');
+
+Route::get('/dashboard',[DashboardController::class,'noEvent'])
+    ->name('dashboard.noevent');
 
 
 Route::post('/event', [EventController::class, 'store'])

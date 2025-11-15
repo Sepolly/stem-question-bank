@@ -30,17 +30,16 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 const page = usePage();
 const user = page.props.auth.user;
+
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
         <Head title="Profile settings" />
-
-        <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall title="Profile information" description="Update your name and email address" />
 
-                <Form v-bind="ProfileController.update.form()" class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
+                <Form class="space-y-6" v-slot="{ errors, processing, recentlySuccessful }">
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
                         <Input
@@ -103,6 +102,5 @@ const user = page.props.auth.user;
             </div>
 
             <DeleteUser />
-        </SettingsLayout>
     </AppLayout>
 </template>

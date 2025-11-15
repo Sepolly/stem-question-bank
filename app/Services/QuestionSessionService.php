@@ -15,13 +15,25 @@ final class QuestionSessionService
         protected EventService $eventService
     ) {}
 
+    public function getSessionById(?int $sessionId)
+    {
+        try {
+            return $sessionId ? Session::query()
+                ->with('questions.answer')
+                ->findOrFail($sessionId) : null;
+        } catch (\Throwable $e) {
+            Log::error($e->getMessage());
+            return null;
+        }
+    }
+
     public function getAllSessions()
     {
         try {
             return $this->eventService
                 ->getCurrentEvent()
                 ->sessions()
-                ->with('questions.options')
+                ->with(['questions.options','questions.answer'])
                 ->get();
         } catch (\Throwable $e) {
             Log::error($e->getMessage());

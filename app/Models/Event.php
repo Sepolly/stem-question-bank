@@ -43,4 +43,9 @@ class Event extends Model
     {
         return $this->hasMany(Session::class);
     }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
