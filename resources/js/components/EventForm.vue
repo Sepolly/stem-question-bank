@@ -19,12 +19,12 @@ const saveEvent = () => {
 </script>
 <template>
     <section>
-        <h2 class="text-center text-xl font-bold">Create Event</h2>
         <form @submit.prevent="saveEvent" class="mt-4 space-y-4 text-gray-700">
             <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700">Event Name</label>
                 <input
                     v-model="form.name"
+                    placeholder="STEM Competition"
                     class="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
                 <InputError :message="form.errors.name" />

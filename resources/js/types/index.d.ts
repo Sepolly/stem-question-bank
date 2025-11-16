@@ -34,6 +34,7 @@ export interface User {
     email: string;
     avatar?: string;
     roles: Role[];
+    events: Event[];
     isSuperAdmin: boolean;
     canManageSubject: boolean;
     canAddQuestion: boolean;

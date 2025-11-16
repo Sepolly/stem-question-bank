@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'roles' => $this->getRoleNames(),
+            // 'events' => $this->events ? EventResource::collection($this->whenLoaded('events')) : null,
             'isSuperAdmin' => $this->isSuperAdmin(),
             'canManageSubject' => $this->canManageSubject(),
             'canAddQuestion' => $this->canAddQuestion(),

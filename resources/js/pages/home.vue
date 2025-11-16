@@ -6,7 +6,7 @@ import { Question, Subject } from '@/types';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 
-const {SignIn,SignUp,currentUser} = useAuth()
+const {SignIn,SignUp,currentUser,userHasEvent} = useAuth()
 const {currentEvent} = useEvent()
 
 defineProps<{
@@ -29,7 +29,7 @@ defineProps<{
         <a href="#" class="hover:text-blue-600">Docs</a>
       </div>
 
-      <div v-if="currentUser">
+      <div v-if="currentUser && userHasEvent">
         <button @click="router.get(DashboardController({event: currentEvent.id}))" class="cursor-pointer px-5 py-2 bg-blue-600 text-white font-semibold rounded-xl shadow hover:bg-blue-700">
             Dashboard
         </button>
@@ -94,7 +94,7 @@ defineProps<{
           </p>
 
           <div class="mt-8 flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
-            <button @click="router.get(DashboardController.noEvent())" class="cursor-pointer px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow hover:bg-blue-700">
+            <button @click="()=>router.get(DashboardController.noEvent())" class="cursor-pointer px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow hover:bg-blue-700">
               Create a Question Bank
             </button>
             <button class="cursor-pointer px-6 py-3 border border-gray-300 rounded-xl hover:bg-gray-100">

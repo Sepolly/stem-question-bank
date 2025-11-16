@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
@@ -37,6 +38,8 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        DB::beginTransaction();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -49,8 +52,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return to_route('dashboard',[
-            'event' => cache()->get('current_event_id')
-        ]);
+        DB::commit();
+
+        return to_route(route: 'dashboard.noevent');
     }
 }
