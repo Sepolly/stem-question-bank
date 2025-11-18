@@ -26,7 +26,9 @@ class EventService
     public function getUserEvents()
     {
         try {
-            return request()->user()->events;
+            return request()->user() ? 
+            request()->user()->events
+            : [];
         } catch (\Throwable $e) {
             Log::error($e->getMessage());
         }

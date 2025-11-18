@@ -19,6 +19,8 @@ class UserMiddleware
         $user = $request->user();
         $currentEventId = cache()->get('current_event_id');
 
+        dd($currentEventId);
+
         if($user->inEvent($currentEventId) && $user->isSuperAdmin()){
             return $next($request);
         }

@@ -33,7 +33,8 @@ class User extends Authenticatable
 
     public function inEvent(int $eventId)
     {
-        return in_array($eventId, $this->events()->pluck('events.id')->toArray());
+        return $this->events && 
+            in_array($eventId, $this->events()->pluck('events.id')->toArray());
     }
 
     public function isCreatorOfEvent(Event $event)

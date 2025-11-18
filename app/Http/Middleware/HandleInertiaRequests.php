@@ -48,14 +48,17 @@ class HandleInertiaRequests extends Middleware
             cache()->forever('current_event_id', $currentEvent->id);
         }
 
+        
         $user = $request->user();
         $user?->load('events');
+
+        // dd($this->eventService->getUserEvents());
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user() ? UserResource::make($user) : null,
+                'user' => $user ? UserResource::make($user) : null,
             ],
             'currentEvent' => $currentEvent ? EventResource::make($currentEvent ?? []) : null,
             'events' => EventResource::collection($this->eventService->getUserEvents() ?? []),

@@ -7,7 +7,7 @@ import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/Regist
 
 export function useAuth() {
     const currentUser = ref<User>(usePage().props.auth.user);
-    const userHasEvent = ref<boolean>(!!currentUser.value.events)
+    const userHasEvent = ref<boolean>(!!currentUser.value?.events)
 
     const SignIn = () => {
         router.get(AuthenticatedSessionController.create())

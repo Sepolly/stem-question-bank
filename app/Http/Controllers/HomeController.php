@@ -17,6 +17,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+
         return Inertia::render('home',[
             'subjects' => SubjectResource::collection($subjects)
         ]);
